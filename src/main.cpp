@@ -1,5 +1,6 @@
 #include <Arduino.h>
 #include <LoRa.h>
+#include <SPI.h>
 
 #define ss 5
 #define rst 14
@@ -11,7 +12,7 @@ unsigned long waktu_tulis;
 void setup() {
   Serial.begin(115200);
   while (!Serial)
-  Serial.println("LoRa Sensor")
+  Serial.println("LoRa Sensor");
 
   LoRa.setPins(ss, rst, dio0);
   
@@ -31,14 +32,16 @@ void loop() {
   sensor2 = random(10,30);
   Serial.printf("SensDev S1 = %d, S2 = %d \n",sensor1,sensor2);
 
+  while(millis() >= waktu_tulis + 1000){
   //Send LoRa packet to receiver
   LoRa.beginPacket();
   LoRa.printf("SensDev S1 = %d, S2 = %d \n",sensor1,sensor2);
   // LoRa.print("hello ");
   LoRa.print(counter);
   LoRa.endPacket();
-
+  waktu_tulis = millis();
   counter++;
+  }
 
  
   // put your main code here, to run repeatedly:
