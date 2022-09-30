@@ -30,9 +30,10 @@ void loop() {
   Serial.println(counter);
   sensor1 = random(0,100);
   sensor2 = random(10,30);
-  Serial.printf("SensDev S1 = %d, S2 = %d \n",sensor1,sensor2);
+  
 
   while(millis() >= waktu_tulis + 1000){
+  Serial.printf("SensDev S1 = %d, S2 = %d \n",sensor1,sensor2);
   //Send LoRa packet to receiver
   LoRa.beginPacket();
   LoRa.printf("SensDev S1 = %d, S2 = %d \n",sensor1,sensor2);
